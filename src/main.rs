@@ -1,26 +1,30 @@
-#![feature(proc_macro_hygiene, decl_macro)]
+#[macro_use]
+extern crate rocket;
 
-#[macro_use] extern crate rocket;
+mod models;
+use crate::models::answer::Answer;
+use crate::models::imatrix::IMatrix;
+use rocket::serde::json::Json;
 
+#[post("/", format = "json", data = "<matrix>")]
+fn hello(matrix: Json<IMatrix>) -> Json<Answer> {
+    let mut ans_vec = Vec::new();
 
-use rocket_contrib::json::Json;
-use serde::Serialize;
+    for i in matrix.matrix.iter() {
+        ans_vec.push(Vec::new());
+        for j in i.iter() {
+            ans_vec.last_mut().unwrap().push(j+2);
+        }
+        
+    }
 
-
-#[derive(Serialize)]
-struct Answer {
-    name: String,
-    matrix: Vec<Vec<i32>>
-}
-
-#[get("/")]
-fn index() -> Json<Answer> {
-    Json(Answer{
-        name: String::from("AAA"),
-        matrix: vec!(vec!(1,2,3))
+    Json(Answer {
+        name: String::from("AAAA"),
+        matrix: ans_vec,
     })
 }
 
-fn main() {
-    rocket::ignite().mount("/", routes![index]).launch();
+#[launch]
+fn rocket() -> _ {
+    rocket::build().mount("/", routes![hello])
 }
