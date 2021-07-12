@@ -1,5 +1,5 @@
 [package]
-name = "dmt_rust_server"
+name = "dmt_server"
 version = "0.1.0"
 edition = "2018"
 
