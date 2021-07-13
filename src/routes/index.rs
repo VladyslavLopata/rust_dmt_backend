@@ -1,14 +1,13 @@
-use crate::models::answer::Answer;
-use crate::models::imatrix::IMatrix;
-use crate::use_cases::calculate_new_matrix::calculate_new_matrix;
+use rocket::serde::json::Value;
+use rocket::serde::json::json;
 use rocket::serde::json::Json;
+use crate::models::lab_first::LabFirst;
+use crate::use_cases::calculate_lab_first::calculate_lab_first;
 
-#[post("/", format = "json", data = "<matrix>")]
-pub fn index(matrix: Json<IMatrix>) -> Json<Answer> {
-    let ans_vec = calculate_new_matrix(&matrix.matrix);
 
-    Json(Answer {
-        name: String::from("New Matrix"),
-        matrix: ans_vec,
-    })
+#[post("/api/lab1", data = "<matrix>")]
+pub fn index(matrix: Json<LabFirst>) -> Json<Value> {
+    let ans_vec = calculate_lab_first(&matrix.experts);
+
+    Json(json!(ans_vec))
 }

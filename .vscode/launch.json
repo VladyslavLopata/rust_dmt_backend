@@ -7,15 +7,34 @@
         {
             "type": "lldb",
             "request": "launch",
-            "name": "Debug executable 'dmt_rust_server'",
+            "name": "Debug unit tests in library 'dmt_server'",
+            "cargo": {
+                "args": [
+                    "test",
+                    "--no-run",
+                    "--lib",
+                    "--package=dmt_server"
+                ],
+                "filter": {
+                    "name": "dmt_server",
+                    "kind": "lib"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug executable 'dmt_server'",
             "cargo": {
                 "args": [
                     "build",
-                    "--bin=dmt_rust_server",
-                    "--package=dmt_rust_server"
+                    "--bin=dmt_server",
+                    "--package=dmt_server"
                 ],
                 "filter": {
-                    "name": "dmt_rust_server",
+                    "name": "dmt_server",
                     "kind": "bin"
                 }
             },
@@ -25,16 +44,16 @@
         {
             "type": "lldb",
             "request": "launch",
-            "name": "Debug unit tests in executable 'dmt_rust_server'",
+            "name": "Debug unit tests in executable 'dmt_server'",
             "cargo": {
                 "args": [
                     "test",
                     "--no-run",
-                    "--bin=dmt_rust_server",
-                    "--package=dmt_rust_server"
+                    "--bin=dmt_server",
+                    "--package=dmt_server"
                 ],
                 "filter": {
-                    "name": "dmt_rust_server",
+                    "name": "dmt_server",
                     "kind": "bin"
                 }
             },
